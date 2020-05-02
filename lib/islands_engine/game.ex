@@ -97,7 +97,7 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success(:ok)
     else
-      :error -> reply_error(:error, state_data)
+      :error -> reply_error(state_data, :error)
     end
   end
 
@@ -114,10 +114,10 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success(:ok)
     else
-      :error                         -> reply_error(:error, state_data)
-      {:error, :invalid_coordinate}  -> reply_error({:error, :invalid_coordinate}, state_data)
-      {:error, :invalid_island_type} -> reply_error({:error, :invalid_island_type}, state_data)
-      {:error, :overlapping_island}  -> reply_error({:error, :overlapping_island}, state_data)
+      :error                         -> reply_error(state_data, :error)
+      {:error, :invalid_coordinate}  -> reply_error(state_data, {:error, :invalid_coordinate})
+      {:error, :invalid_island_type} -> reply_error(state_data, {:error, :invalid_island_type})
+      {:error, :overlapping_island}  -> reply_error(state_data, {:error, :overlapping_island})
     end
   end
 
@@ -131,8 +131,8 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success({:ok, board})
     else
-      :error -> reply_error(:error, state_data)
-      false  -> reply_error({:error, :not_all_islands_positioned}, state_data)
+      :error -> reply_error(state_data, :error)
+      false  -> reply_error(state_data, {:error, :not_all_islands_positioned})
     end
   end
 
@@ -155,8 +155,8 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success({hit_or_miss, forested_island, win_status})
     else
-      :error                        -> reply_error(:error, state_data)
-      {:error, :invalid_coordinate} -> reply_error({:error, :invalid_coordinate}, state_data)
+      :error                        -> reply_error(state_data, :error)
+      {:error, :invalid_coordinate} -> reply_error(state_data, {:error, :invalid_coordinate})
     end
   end
 
